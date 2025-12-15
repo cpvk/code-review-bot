@@ -1,0 +1,18 @@
+# Pinned for reproducible installs. Bump one package at a time with tests.
+anthropic==0.79.0
+openai==2.20.0
+PyGithub==2.8.1
+tree-sitter==0.25.2
+tree-sitter-python==0.25.0
+pydantic==2.12.5
+PyYAML==6.0.3
+unidiff==0.7.5
+
+# Dashboard (optional)
+streamlit==1.54.0
+
+# Testing / development
+pytest==9.0.2
+pytest-asyncio==1.3.0
+pytest-cov==7.0.0
+ruff==0.15.0

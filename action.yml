@@ -1,0 +1,49 @@
+name: "AI Code Reviewer"
+description: "AI-powered code review bot using AST analysis and multi-pass LLM reasoning"
+author: "chandraprakash"
+
+branding:
+  icon: "eye"
+  color: "blue"
+
+inputs:
+  github_token:
+    description: "GitHub token for API access"
+    required: true
+    default: ${{ github.token }}
+  anthropic_api_key:
+    description: "Anthropic API key for Claude"
+    required: true
+  openai_api_key:
+    description: "OpenAI API key (optional fallback)"
+    required: false
+  llm_provider:
+    description: "LLM provider to use: anthropic or openai"
+    required: false
+    default: "anthropic"
+  review_passes:
+    description: "Comma-separated review passes: security,bug,performance,style"
+    required: false
+    default: "security,bug,performance,style"
+  max_files:
+    description: "Maximum number of files to review per PR"
+    required: false
+    default: "20"
+  confidence_threshold:
+    description: "Minimum confidence (0-1) for posting a comment"
+    required: false
+    default: "0.5"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    ANTHROPIC_API_KEY: ${{ inputs.anthropic_api_key }}
+    OPENAI_API_KEY: ${{ inputs.openai_api_key }}
+    LLM_PROVIDER: ${{ inputs.llm_provider }}
+    REVIEW_PASSES: ${{ inputs.review_passes }}
+    MAX_FILES: ${{ inputs.max_files }}
+    CONFIDENCE_THRESHOLD: ${{ inputs.confidence_threshold }}
+    GITHUB_REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
